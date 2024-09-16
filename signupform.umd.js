@@ -1227,48 +1227,66 @@
     jsxRuntime.exports = requireReactJsxRuntime_development();
   }
   var jsxRuntimeExports = jsxRuntime.exports;
-  const TextField = ({ label, type = "text", name, value, onValueChange, placeholder, required = false }) => {
-    const handleChange = (e) => {
-      if (onValueChange) {
-        onValueChange(e);
+  const SignUpForm = () => {
+    const [username, setUsername] = o.useState("");
+    const [password, setPassword] = o.useState("");
+    o.useEffect(() => {
+      if (username) {
+        console.log("Username updated to:", username);
+        console.log("Password updated to:", password);
       }
-      const customEvent = new CustomEvent("value-change", {
-        detail: { value: e.target.value },
-        bubbles: true,
-        composed: true
-      });
-      e.target.dispatchEvent(customEvent);
+    }, [username, password]);
+    window.handleUsernameChange = (e) => {
+      setUsername(e.target.value);
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-gray-500 text-sm font-bold mb-2", htmlFor: name, children: label }),
+    window.handlePasswordChange = (e) => {
+      setPassword(e.target.value);
+    };
+    const handleButtonClick = (e) => {
+      e.preventDefault();
+      console.log(username);
+      console.log(password);
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleButtonClick, className: "flex flex-col justify-center items-center bg-white rounded border mt-6 p-16", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "flex text-gray-500 text-sm font-bold w-full justify-center mb-8", children: "Test Form" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
+        "text-field",
         {
-          required,
-          type,
-          name,
-          id: name,
-          defaultValue: value,
-          onChange: handleChange,
-          placeholder,
-          className: "border rounded w-full py-2 px-3"
+          required: true,
+          label: "Username",
+          name: "username",
+          value: username,
+          "on-value-change": "handleUsernameChange",
+          placeholder: "Enter username"
         }
-      )
-    ] });
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "text-field",
+        {
+          required: true,
+          label: "Password",
+          name: "password",
+          value: password,
+          "on-value-change": "handlePasswordChange",
+          placeholder: "Enter password"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("custom-button", { type: "submit", label: "Login" })
+    ] }) });
   };
-  const TextFieldWC = s(
-    TextField,
-    {
-      props: {
-        label: "string",
-        type: "string",
-        name: "string",
-        value: "string",
-        onValueChange: "function",
-        placeholder: "string",
-        required: "boolean"
-      }
-    }
+  const SignUpFormWC = s(
+    SignUpForm
+    // {
+    // props: {
+    //   label: "string",
+    //   type: "string",
+    //   name: "string",
+    //   value: "string",
+    //   onValueChange: "function",
+    //   placeholder: "string",
+    //   required: "boolean",
+    // },
+    // }
   );
-  customElements.define("text-field", TextFieldWC);
+  customElements.define("sign-up-form", SignUpFormWC);
 });
